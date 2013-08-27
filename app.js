@@ -36,7 +36,7 @@ if ('development' == app.get('env')) {
  * Database
  */
 
-mongoose.connect('mongodb://localhost/ExpressExample');
+mongoose.connect(process.env.MONGOHQ_URL || 'mongodb://localhost/ExpressExample');
 db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function callback () {
