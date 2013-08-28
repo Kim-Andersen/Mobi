@@ -3,10 +3,10 @@
 	Employee List Controller
 */
 
-app.controller("EmployeeListCtrl", function($scope, $http){
+app.controller("EmployeeListCtrl", ["$scope", "employeeService", function($scope, employeeService){
 	$scope.loadEmployees = function(){
 		$scope.refreshing = true;
-		$http.get('/api/employees').success(function(data){
+		employeeService.getAll().success(function(data){
 			$scope.users = data;
 			$scope.refreshing = false;
 		});
@@ -27,7 +27,7 @@ app.controller("EmployeeListCtrl", function($scope, $http){
 
 	$scope.saveEmployee = function(employee){
 		$scope.clearApiErrors();
-		$http.post("/api/employees", employee).success(function(data){
+		employeeService.add(employee).success(function(data){
 			$scope.workingEmployee = null;
 			$scope.users.push(data);
 		}).error(function(data){
@@ -37,7 +37,7 @@ app.controller("EmployeeListCtrl", function($scope, $http){
 
 	$scope.updateEmployee = function(employee){
 		$scope.clearApiErrors();
-		$http.put("/api/employees/"+employee._id, employee).success(function(){
+		employeeService.update(employee).success(function(){
 			$scope.workingEmployee = null;
 		}).error(function(data){
 			$scope.handleApiError(data);
@@ -45,7 +45,7 @@ app.controller("EmployeeListCtrl", function($scope, $http){
 	};
 
 	$scope.deleteEmployee = function(id){
-		$http.delete("/api/employees/"+id).success(function(){
+		employeeService.delete(id).success(function(){
 			$scope.loadEmployees();
 		});
 	};
@@ -63,14 +63,14 @@ app.controller("EmployeeListCtrl", function($scope, $http){
 	};
 
 	$scope.loadEmployees();
-});
+}]);
 
 /*	
 	Employee Detail Controller
 */
 
-app.controller("EmployeeDetailCtrl", function($scope, $http, $routeParams){
-	$http.get("/api/employees/"+$routeParams.id).success(function(data){
+app.controller("EmployeeDetailCtrl", ["$scope", "$routeParams", "employeeService", function($scope, $routeParams, employeeService){
+	employeeService.get($routeParams.id).success(function(data){
 		$scope.employee = data[0];
 	});
-});
+}]);
