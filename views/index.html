@@ -8,9 +8,20 @@
 			input.invalid {
 				background-color: red;
 			}
+			header {background-color: pink;margin:0 0 20px 0;padding:10px;height: 20px;}
+			header ul {list-style: none;padding:0;margin:0;height: 20px;}
+			header ul li {float: left;margin-right:12px;}
+			header ul li a {display: block;height: 20px;line-height: 20px;}
 		</style>
 	</head>
 <body>
+	<header>
+		<ul>
+			<li><a href="/#/">Home</a></li>
+			<li><a href="#/employees">Employees</a></li>
+		</ul>		
+	</header>
+
 	<div ng-view></div>
 	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular.min.js" language="javascript" type="text/javascript"></script>
 	<script type="text/javascript">window.angular || document.write('<script type="text/javascript" src="javascripts/libs/angular.min.js">\x3C/script>');</script>
