@@ -15,8 +15,9 @@
 
 	<ul>
 		<li ng-repeat="user in users" style="margin:0 0 10px 0;" ng-hide="filterTerm && (user.name+' '+user.title).toLowerCase().indexOf(filterTerm.toLowerCase()) < 0">
-			<a href="" ng-click="editEmployee(user)" style="font-weight:700;">{{user.name}}</a> 
+			<a href="#/employees/{{user._id}}" style="font-weight:700;">{{user.name}}</a> 
 			<span style="color:#aaa;">{{user.title}}</span> - 
+			<a href="" ng-click="editEmployee(user)">Edit</a> | 
 			<a href="" ng-click="deleteEmployee(user._id)">Delete</a>
 		</li>
 	</ul>
