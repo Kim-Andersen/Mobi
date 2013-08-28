@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" ng-app>
+<html lang="en" ng-app="Mobi">
 	<head>
 		<link rel="stylesheet" href="stylesheets/normalize.css">
 		<style>
@@ -8,97 +8,12 @@
 			}
 		</style>
 	</head>
-<body ng-controller="BodyController">
+<body>
 	<h2>MongoDB, NodeJS, Express, AngularJS</h2>
-
-	<button ng-click="workingEmployee = {}">Add employee</button>
-	<button ng-click="loadEmployees()" ng-disabled="refreshing">Refresh</button>
-	<input placeholder="Filter" type="text" ng-model="filterTerm" />
-	<hr>
-
-	<div ng-show="workingEmployee" style="border:solid 1px #ddd;background-color:#ddd;padding:10px;margin-bottom:20px;">
-		<form>
-			<div style="margin-bottom:10px;"><input type="text" ng-model="workingEmployee.name" placeholder="Name" ng-class="{'invalid': validationError && validationError.name}"></div>
-			<div style="margin-bottom:10px;"><input type="text" ng-model="workingEmployee.title" placeholder="Title"></div>
-			<button ng-click="submitEmployee()">Submit</button>
-			<button type="submit" ng-click="workingEmployee = null">Cancel</button>
-		</form>
-	</div>
-
-	<ul>
-		<li ng-repeat="user in users" style="margin:0 0 10px 0;" ng-hide="filterTerm && (user.name+' '+user.title).toLowerCase().indexOf(filterTerm.toLowerCase()) < 0">
-			<a href="#" ng-click="editEmployee(user)" style="font-weight:700;">{{user.name}}</a> 
-			<span style="color:#aaa;">{{user.title}}</span> - 
-			<a href="#" ng-click="deleteEmployee(user._id)">Delete</a>
-		</li>
-	</ul>
-
-	<script type="text/javascript">
-	function BodyController($scope, $http, $timeout){
-
-		$scope.loadEmployees = function(){
-			$scope.refreshing = true;
-			$http.get('employees').success(function(data){
-				$scope.users = data;
-				$scope.refreshing = false;
-			});
-		};
-
-		$scope.editEmployee = function(empl){
-			$scope.workingEmployee = empl;
-		};
-
-		$scope.submitEmployee = function(){
-			if($scope.workingEmployee._id){
-				$scope.updateEmployee($scope.workingEmployee);
-			}
-			else {
-				$scope.saveEmployee($scope.workingEmployee);
-			}
-		};
-
-		$scope.saveEmployee = function(employee){
-			$scope.clearApiErrors();
-			$http.post("employees", employee).success(function(data){
-				$scope.workingEmployee = null;
-				$scope.users.push(data);
-			}).error(function(data){
-				$scope.handleApiError(data);
-			});
-		};
-
-		$scope.updateEmployee = function(employee){
-			$scope.clearApiErrors();
-			$http.put("employees/"+employee._id, employee).success(function(){
-				$scope.workingEmployee = null;
-				debuggger;
-			}).error(function(data){
-				$scope.handleApiError(data);
-			});
-		};
-
-		$scope.deleteEmployee = function(id){
-			$http.delete("employees/"+id).success(function(){
-				$scope.loadEmployees();
-			});
-		};
-
-		$scope.handleApiError = function(data){
-			switch(data.name){
-				case "ValidationError":
-					$scope.validationError = data.errors;
-				break;
-			};
-		};
-
-		$scope.clearApiErrors = function(){
-			$scope.validationError = null;
-		};
-
-		$scope.loadEmployees();
-	}
-	</script>
+	<div ng-view></div>
 	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular.min.js" language="javascript" type="text/javascript"></script>
-	<script type="text/javascript">window.angular || document.write('<script type="text/javascript" src="javascripts/angular.min.js">\x3C/script>');</script>
+	<script type="text/javascript">window.angular || document.write('<script type="text/javascript" src="javascripts/libs/angular.min.js">\x3C/script>');</script>
+	<script src="javascripts/app/app.js" language="javascript" type="text/javascript"></script>
+	<script src="javascripts/app/controllers.js" language="javascript" type="text/javascript"></script>
 </body>
 </html>
