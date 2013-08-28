@@ -1,0 +1,15 @@
+<button ng-click="adding = true" ng-show="!adding">New Memorization</button>
+
+<div ng-show="adding">
+	<h3>{{successfullAttempts}} / {{requiredAttempts}}</h3>
+	<div style="margin:0 0 10px 0;"><input type="text" ng-model="attempt" style="width:80%;"></div>
+	<button ng-click="submitAttempt()">Submit</button>
+	<button ng-click="attempt = null; adding = false">Cancel</button>
+</div>
+
+<hr>
+<ul>
+	<li ng-repeat="item in items" style="margin:0 0 10px 0;">
+		{{item.text}}
+	</li>
+</ul>

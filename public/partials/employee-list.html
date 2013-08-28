@@ -1,24 +1,22 @@
-<div>
-	<button ng-click="workingEmployee = {}">Add employee</button>
-	<button ng-click="loadEmployees()" ng-disabled="refreshing">Refresh</button>
-	<input placeholder="Filter" type="text" ng-model="filterTerm" />
-	<hr>
+<button ng-click="workingEmployee = {}">Add employee</button>
+<button ng-click="loadEmployees()" ng-disabled="refreshing">Refresh</button>
+<input placeholder="Filter" type="text" ng-model="filterTerm" />
+<hr>
 
-	<div ng-show="workingEmployee" style="border:solid 1px #ddd;background-color:#ddd;padding:10px;margin-bottom:20px;">
-		<form>
-			<div style="margin-bottom:10px;"><input type="text" ng-model="workingEmployee.name" placeholder="Name" ng-class="{'invalid': validationError && validationError.name}"></div>
-			<div style="margin-bottom:10px;"><input type="text" ng-model="workingEmployee.title" placeholder="Title"></div>
-			<button ng-click="submitEmployee()">Submit</button>
-			<button type="submit" ng-click="workingEmployee = null">Cancel</button>
-		</form>
-	</div>
-
-	<ul>
-		<li ng-repeat="user in users" style="margin:0 0 10px 0;" ng-hide="filterTerm && (user.name+' '+user.title).toLowerCase().indexOf(filterTerm.toLowerCase()) < 0">
-			<a href="#/employees/{{user._id}}" style="font-weight:700;">{{user.name}}</a> 
-			<span style="color:#aaa;">{{user.title}}</span> - 
-			<a href="" ng-click="editEmployee(user)">Edit</a> | 
-			<a href="" ng-click="deleteEmployee(user._id)">Delete</a>
-		</li>
-	</ul>
+<div ng-show="workingEmployee" style="border:solid 1px #ddd;background-color:#ddd;padding:10px;margin-bottom:20px;">
+	<form>
+		<div style="margin-bottom:10px;"><input type="text" ng-model="workingEmployee.name" placeholder="Name" ng-class="{'invalid': validationError && validationError.name}"></div>
+		<div style="margin-bottom:10px;"><input type="text" ng-model="workingEmployee.title" placeholder="Title"></div>
+		<button ng-click="submitEmployee()">Submit</button>
+		<button type="submit" ng-click="workingEmployee = null">Cancel</button>
+	</form>
 </div>
+
+<ul>
+	<li ng-repeat="user in users" style="margin:0 0 10px 0;" ng-hide="filterTerm && (user.name+' '+user.title).toLowerCase().indexOf(filterTerm.toLowerCase()) < 0">
+		<a href="#/employees/{{user._id}}" style="font-weight:700;">{{user.name}}</a> 
+		<span style="color:#aaa;">{{user.title}}</span> - 
+		<a href="" ng-click="editEmployee(user)">Edit</a> | 
+		<a href="" ng-click="deleteEmployee(user._id)">Delete</a>
+	</li>
+</ul>

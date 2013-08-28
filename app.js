@@ -25,7 +25,10 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 mongoose = require('mongoose');
 models = require('./models/models')(mongoose);
-routes = require('./routes/employee')(app, models);
+
+// Routes.
+require('./routes/employee')(app, models);
+require('./routes/memorization')(app, models);
 
 // development only
 if ('development' == app.get('env')) {

@@ -74,3 +74,49 @@ app.controller("EmployeeDetailCtrl", ["$scope", "$routeParams", "employeeService
 		$scope.employee = data[0];
 	});
 }]);
+
+/*	
+	Memorization List Controller
+*/
+
+app.controller("MemorizationListCtrl", ["$scope", "$routeParams", "memorizationService", function($scope, $routeParams, memorizationService){
+	$scope.successfullAttempts = 0;
+	$scope.requiredAttempts = 4;
+	$scope.successFeedback = ["Good. Do that again.", "Great. Only two to go.", "You're awesome. one more time!"];
+
+	$scope.getAll = function(){
+		memorizationService.getAll().success(function(data){
+			$scope.items = data;
+		});	
+	};
+
+	$scope.submitAttempt = function(){
+		if($scope.successfullAttempts == 0){
+			$scope.newItem = {};
+			$scope.newItem["text"] = $scope.attempt;
+			$scope.successfullAttempts++;
+			$scope.attempt = "";
+		}
+		else if($scope.successfullAttempts == $scope.requiredAttempts){
+			$scope.attempt = "";
+			$scope.successfullAttempts = 0;
+			$adding = false;
+			alert("You nailed it !!! ");
+			memorizationService.add($scope.newItem).success(function(data){
+				$scope.adding = false;
+				$scope.getAll();
+			});
+		}
+		else if($scope.successfullAttempts < $scope.requiredAttempts && $scope.attempt.toLowerCase() == $scope.newItem["text"].toLowerCase()) {
+			alert($scope.successFeedback[$scope.successfullAttempts-1]);
+			$scope.attempt = "";
+			$scope.successfullAttempts++;
+		}
+		else {
+			alert("Incorrect");
+			$scope.attempt = "";
+		}
+	};
+
+	$scope.getAll();
+}]);
